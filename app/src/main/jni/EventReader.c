@@ -2,15 +2,17 @@
 #include <string.h>
 #include <jni.h>
 #include <stdint.h>
-#include <linux/input.h>
-#include <string.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <pthread.h>
+#include <stdlib.h>
+#include <linux/input.h>
+#include <android/log.h>
+#include <sys/select.h>
+#include <sys/time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <android/log.h>
-#include <pthread.h>
 #define LOG_TAG "jni"
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
 /* 
@@ -20,9 +22,7 @@
  */
 void thread(void)
 {
-    int i;
-//    for(i=0;i<3;i++)
-        printf("This is a pthread.\n");
+    printf("This is a pthread.\n");
 
     int fd;
     int time;
@@ -32,7 +32,7 @@ void thread(void)
     fd = open("/dev/input/event2", O_RDONLY);
 
     if(!fd){
-        printf("Failed to open \"/dev/input/js1\"\n");
+        LOGI("Failed to open \"/dev/input/js1\"\n");
     }else{
         LOGI("xxx=%d",fd);
     }
@@ -67,15 +67,6 @@ JNIEXPORT jstring JNICALL Java_kuan_com_myapplication_EventReader_getEventFromIn
 //		}
 
 
-
-
-//#include <stdlib.h>
-//#include <stdio.h>
-//#include <sys/types.h>
-//#include <sys/stat.h>
-//#include <fcntl.h>
-//#include <sys/select.h>
-//#include <sys/time.h>
 
 
 //        int fd, retval;
@@ -160,6 +151,8 @@ JNIEXPORT void JNICALL Java_kuan_com_myapplication_EventReader_showEvent
         LOGI("xxx=%d",fd);
         read(fd, buf, 12);
         LOGI("Button type = %d, X = %d, Y = %d\n", (buf[0] & 0x07), buf[1], buf[2]);
+        LOGI("0x%02x 0x%02x 0x%02x 0x%02x   0x%02x 0x%02x 0x%02x 0x%02x   0x%02x 0x%02x 0x%02x 0x%02x \n",
+                       buf[0], buf[1], buf[2],buf[3],buf[4], buf[5], buf[6],buf[7],buf[8], buf[9], buf[10],buf[11]);
         close(fd);
     }
 }
