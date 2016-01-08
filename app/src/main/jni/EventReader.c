@@ -37,5 +37,5 @@ JNIEXPORT jstring JNICALL Java_kuan_com_myapplication_EventReader_getEventFromIn
 //		}
 
 
-    return (*env)->NewStringUTF(env,"I'm comes from to Native Function!");
+    return (*env)->NewStringUTF(env,"I'm comes from to Native Function! in mac");
 }
