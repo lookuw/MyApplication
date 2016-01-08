@@ -8,5 +8,7 @@ public class EventReader {
         System.loadLibrary("jniEvent");
     }
 
-    public native String getEventFromInput();
+    public static native String getEventFromInput();
+
+    public static native void showEvent();
 }

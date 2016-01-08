@@ -15,6 +15,9 @@ extern "C" {
 JNIEXPORT jstring JNICALL Java_kuan_com_myapplication_EventReader_getEventFromInput
   (JNIEnv *, jobject);
 
+JNIEXPORT void JNICALL Java_kuan_com_myapplication_EventReader_showEvent
+  (JNIEnv *, jobject);
+
 #ifdef __cplusplus
 }
 #endif
